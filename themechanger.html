@@ -6,14 +6,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Theme Changer With LocalStorage</title>
 
-    <style></style>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        --bgc: hsl(343, 100%, 98%);
+        --tc: #ff0048;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        font-size: 3rem;
+      }
+
+      html[data-theme="dark"] {
+        --bgc: hsl(343, 20%, 10%);
+        --tc: hsl(343, 100%, 40%);
+      }
+
+      body {
+        background-color: var(--bgc);
+        transition: all 750ms !important;
+        transition-delay: 0 !important;
+      }
+
+      h1 {
+        color: var(--tc);
+      }
+
+      /* Toggler Style */
+      input[type="checkbox"] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+      }
+
+      label {
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 200px;
+        height: 100px;
+        background: grey;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+        margin: 0 auto;
+      }
+
+      label:after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 80px;
+        height: 80px;
+        background: #fff;
+        border-radius: 90px;
+        transition: 0.3s;
+      }
+
+      input:checked + label {
+        background: #ff0048;
+      }
+
+      input:checked + label:after {
+        left: calc(100% - 10px);
+        transform: translateX(-100%);
+      }
+
+      label:active:after {
+        width: 60%;
+      }
+    </style>
   </head>
   <body>
     <section>
       <h1>Dark/Light Theme Changer</h1>
-      <input type="checkbox" name="switch" id="toggler" />
+      <input type="checkbox" name="switch" id="toggler" value="Toggle" />
+      <label for="toggler">Toggler</label>
     </section>
 
-    <script></script>
+    <script>
+      const toggleButton = document.getElementById("toggler");
+
+      // Add Action on Checkbox/Toggle Click
+      toggleButton.addEventListener("change", function switchTheme() {
+        if (this.checked) {
+          setDark();
+        } else {
+          setLight();
+        }
+      });
+
+      // Toggle Dark Theme
+      function setDark() {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+
+        // Adding Checked Status for Better UX
+        toggleButton.checked = true;
+        toggleButton.setAttribute("checked", "checked");
+      }
+
+      // Toggle Light Theme
+      function setLight() {
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("theme", "light");
+
+        // Removing Checked Status
+        toggleButton.checked = false;
+        toggleButton.setAttribute("checked", ""); // For IE
+        toggleButton.removeAttribute("checked");
+      }
+
+      // Check The Local Storage First
+      if (localStorage.getItem("theme") === "dark") {
+        setDark();
+      } else if (localStorage.getItem("theme") === "light") {
+        setLight();
+      }
+
+      /*
+       TODO: 
+       * কিভাবে ডিভাইসের ডিফল্ট কালারের সাথে পেইজের কালার ডিফল্ট ভাবে সিঙ্ক করা যায়, এবং থীম চেইঞ্জ করলে শুধু লোকাল স্টোরেজে যেই থীমটিই আছে, শুধু সেটাই যেনো সেট হয়, এমন কিছু ইমপ্লিমেন্টশন শিখতে হবে।  
+      */
+    </script>
   </body>
 </html>
