@@ -8,6 +8,5 @@ I will try to build some simple miniature projects using Vanilla JavaScript. I d
 **[Live Demo](https://alnahian2003.github.io/100jsproject/filter.html)**
 
 ## Project 2: Dark/Light Theme Changer
-
-![Dark/Light Theme Changer](url)
+![Dark/Light Theme Changer](https://user-images.githubusercontent.com/61485238/150562393-10cd67d5-5777-45c1-8b47-8ea780029b30.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/themechanger.html)**
