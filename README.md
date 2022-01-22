@@ -20,12 +20,12 @@ Here it's a very simple Dark/Light theme toggler-switcher-changer (whatever you 
 
 This is a newer and advanced version of the previous project. In this project, User Device default theme preference auto detect functionality added to improve accessibility.
 
-![Advanced Dark/Light Theme Changer](https://user-images.githubusercontent.com/61485238/150562393-10cd67d5-5777-45c1-8b47-8ea780029b30.jpg)
+![Advanced Dark/Light Theme Changer](https://user-images.githubusercontent.com/61485238/150644122-4c4f8265-b648-44c0-ad71-8a290d31c4f9.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/theme-changer-v2.html)**
 
 ## Project 4: Simple Skeleton Screen Loading Animation
 
 This is a beginner friendly project to learn how to implement skeleton animation on the page to improve accessibility. Note: This project will have an updated version later
 
-![Advanced Dark/Light Theme Changer](https://user-images.githubusercontent.com/61485238/150562393-10cd67d5-5777-45c1-8b47-8ea780029b30.jpg)
+![Skeleton Loader Animation](https://user-images.githubusercontent.com/61485238/150643977-c3bff747-bb2e-4ff0-9db2-00ff48aecc50.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/skeleton-loader)**
