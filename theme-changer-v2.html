@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Theme Changer With More Advanced Functions</title>
+
+    <script>
+      // Entire Dark-Light Theme Functionality
+      const storageKey = "theme";
+
+      const changeTheme = () => {
+        theme.name = theme.name === "light" ? "dark" : "light";
+
+        setPreference();
+      };
+
+      const getColorPreference = () => {
+        if (localStorage.getItem(storageKey)) {
+          return localStorage.getItem(storageKey);
+        } else {
+          return window.matchMedia("(prefers-color-scheme: dark)").mathces
+            ? "dark"
+            : "light";
+        }
+      };
+
+      const setPreference = () => {
+        localStorage.setItem(storageKey, theme.name);
+        displayPreference();
+      };
+
+      const displayPreference = () => {
+        document.firstElementChild.setAttribute("data-theme", theme.name);
+        document
+          .querySelector("#themeChanger")
+          ?.setAttribute("aria-label", theme.name);
+      };
+
+      var theme = {
+        name: getColorPreference(),
+      };
+
+      displayPreference();
+
+      window.onload = () => {
+        // So that the screen-reader can get the current dynamic value [optional. just to improve the accessibility]
+        displayPreference();
+
+        document
+          .querySelector("#themeChanger")
+          .addEventListener("click", changeTheme);
+      };
+
+      // Sync With The System Changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", ({ matches: isDark }) => {
+          theme.name = isDark ? "dark" : "light";
+
+          setPreference();
+        });
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Fira Code", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+
+        transition: 0.2s ease;
+      }
+
+      html {
+        font-size: 18px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        --background: hsl(215, 100%, 98%);
+        --primary-color: hsl(215, 100%, 40%);
+        --color-white: #ffffff;
+      }
+
+      html[data-theme="dark"] {
+        --background: hsl(215, 100%, 3%);
+        --primary-color: hsl(215, 100%, 30%);
+        --color-white: hsl(215, 100%, 10%);
+      }
+
+      body {
+        background-color: var(--background);
+      }
+
+      .theme-changer {
+        background-color: var(--color-white);
+        border: 3px solid var(--primary-color);
+        padding: 2rem;
+        color: var(--primary-color);
+        border-radius: 0.3rem;
+        text-transform: uppercase;
+        font-size: 2rem;
+
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        outline-offset: 5px;
+        user-select: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+
+        --bshadow: hsl(215, 100%, 90%);
+        box-shadow: 0px 12px 20px 0px var(--bshadow);
+
+        font-weight: 500;
+      }
+
+      html[data-theme="dark"] .theme-changer {
+        box-shadow: 0px 12px 20px 0px var(--background);
+      }
+
+      .theme-changer:hover {
+        background-color: var(--primary-color);
+        color: var(--color-white);
+        box-shadow: none;
+      }
+
+      html[data-theme="dark"] .theme-changer:hover {
+        box-shadow: 0px 16px 20px 0px hsl(216, 100%, 2%);
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      class="theme-changer"
+      id="themeChanger"
+      title="Toggles Light & Dark"
+      aria-label="auto"
+      aria-live="polite"
+    >
+      Dark / Light
+    </button>
+  </body>
+</html>
