@@ -37,3 +37,4 @@ In this project, I tried implementing my basic understandings to build a very si
 
 ![Simple TODO List](https://user-images.githubusercontent.com/61485238/151235449-11ea5168-0532-4b9b-b328-ff52c2c92abd.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/todo.html)**
+
