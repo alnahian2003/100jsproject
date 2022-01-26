@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple TODO List</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      html {
+        --primary: hsl(200, 100%, 5%);
+        --text: hsl(200, 100%, 50%);
+        font-size: 1.2rem;
+      }
+      body {
+        background-color: var(--primary);
+        color: var(--text);
+        text-align: center;
+        padding: 1rem;
+      }
+
+      section h1 {
+        font-size: 2rem;
+      }
+      div {
+        margin: 3rem auto;
+      }
+
+      form {
+        display: flex;
+        flex-flow: row;
+        margin: 2rem auto;
+      }
+
+      form input[type="text"] {
+        background-color: rgba(0, 0, 0, 0);
+        padding: 1rem;
+        font-size: 2rem;
+        border: 3px solid var(--text);
+        width: 100%;
+        border-right: none;
+        color: var(--text);
+        border-radius: 10px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      ::placeholder {
+        color: hsl(200, 100%, 10%);
+      }
+
+      form input[type="submit"] {
+        font-size: 1rem;
+        background-color: var(--text);
+        color: var(--primary);
+        width: 40%;
+        font-size: 2rem;
+        border: none;
+        font-weight: 600;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+      form input[type="submit"]:focus {
+        background-color: turquoise;
+      }
+
+      ul li {
+        text-align-last: left;
+        list-style-type: square;
+        font-weight: 600;
+        font-size: 2rem;
+        overflow-wrap: break-word;
+        margin-left: 2rem;
+      }
+
+      @media (min-width: 576px) {
+        section {
+          max-width: 576px;
+          margin: 0 auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Simple TODO List</h1>
+      <small>With <b>LocalStorage</b> Integration</small>
+
+      <div>
+        <form>
+          <!-- TODO Input Field -->
+          <input type="text" placeholder="Start brainstorming" autofocus />
+          <!-- Submit Button -->
+          <input type="submit" value="ADD" />
+        </form>
+        <!-- Todo List -->
+        <ul>
+          <!-- List Items -->
+        </ul>
+      </div>
+    </section>
+    <script>
+      const inputForm = document.querySelector("form");
+
+      const inputField = document.querySelector("input[type='text']");
+
+      const submitBtn = document.querySelector("input[type='submit']");
+
+      const ul = document.querySelector("ul");
+
+      const todoItems = [];
+
+      const arr = JSON.parse(localStorage.getItem("todos"));
+      //   Load LocalStorage Items on Page Load
+      window.addEventListener("load", () => {
+        if (localStorage.length > 0) {
+          for (let i = 0; i < arr.length; i++) {
+            const li = document.createElement("li");
+            li.innerText = arr[i];
+            ul.appendChild(li);
+          }
+        }
+      });
+
+      // Prevent Default Events on Submit
+      inputForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Simple form validation
+        if (inputField.value !== "" && inputField.value.length >= 1) {
+          // Create a list item
+          const li = document.createElement("li");
+
+          li.innerText = inputField.value;
+
+          todoItems.push(inputField.value);
+
+          // Add the inputvalue with value to the localstorage
+          localStorage.setItem("todos", JSON.stringify(todoItems));
+
+          // Append the li to the ul
+          ul.appendChild(li);
+          inputField.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
