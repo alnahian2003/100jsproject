@@ -29,3 +29,11 @@ This is a beginner friendly project to learn how to implement skeleton animation
 
 ![Skeleton Loader Animation](https://user-images.githubusercontent.com/61485238/150643977-c3bff747-bb2e-4ff0-9db2-00ff48aecc50.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/skeleton-loader)**
+
+## Project 5: Simple TODO List With LocalStorage
+
+In this project, I tried implementing my basic understandings to build a very simple TODO list web app with the LocalStorage integration.
+[This app has a tiny little bug in it. For example, if you input some list items and then refresh the page, you will see the data remains. but again if you input some new list items, and then refresh the page again, you'll see that the older list items has been removed instead new list items showing as a list! I dunno what to call it, as a bug or a feature 😅 You can name it whatever you want]
+
+![Simple TODO List]()
+**[Live Demo](https://alnahian2003.github.io/100jsproject/todo.html)**
