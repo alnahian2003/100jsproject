@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+
+    <title>Playing With FetchAPI</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <hgroup>
+        <h1>Playing With FetchAPI</h1>
+        <h4>Displaying Data Using AJAX From Many Sources</h4>
+      </hgroup>
+      <!-- Buttons -->
+      <div class="grid">
+        <button id="getText" data-tooltip="Get Data From a Text File">
+          Get From Text
+        </button>
+
+        <button id="getJson" data-tooltip="Get Data From a Local JSON File">
+          Get JSON
+        </button>
+        <button id="getApi" data-tooltip="Get Data From an External API">
+          Get From API
+        </button>
+      </div>
+
+      <br />
+
+      <div class="results">
+        <h3 id="textResult"></h3>
+      </div>
+    </main>
+    <script>
+      const getTextBtn = document.getElementById("getText");
+      const getJsonBtn = document.getElementById("getJson");
+      const getApiBtn = document.getElementById("getApi");
+
+      /* Load Data on {Get From Text} button Click */
+      getTextBtn.addEventListener("click", loadText);
+
+      function loadText() {
+        fetch("data.txt")
+          .then((res) => res.text())
+          .then((data) => {
+            document.getElementById("textResult").innerHTML = data;
+          })
+          .catch((error) => console.log(error));
+      }
+
+      /* Load Data on {Get From Text} button Click */
+      getJsonBtn.addEventListener("click", loadJSON);
+
+      function loadJSON() {
+        alert("Loaded");
+      }
+
+      /* Load Data on {Get From API} button Click */
+      getApiBtn.addEventListener("click", loadApi);
+
+      function loadApi() {
+        alert("Loaded");
+      }
+    </script>
+  </body>
+</html>
