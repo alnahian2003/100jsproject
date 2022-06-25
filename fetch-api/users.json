@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Al Nahian",
+    "job": "Web Developer",
+    "email": "nahian@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Mehbub Rashid Rabu",
+    "job": "Web Developer",
+    "email": "rabu@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Mahamud Hasan",
+    "job": "Entrepreneur",
+    "email": "mahamud@gmail.com"
+  }
+]

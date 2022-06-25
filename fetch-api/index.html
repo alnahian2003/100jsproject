@@ -44,6 +44,9 @@
 
       <div class="results">
         <h3 id="textResult"></h3>
+
+        <br />
+        <table id="jsonResult" role="grid"></table>
       </div>
     </main>
     <script>
@@ -67,7 +70,38 @@
       getJsonBtn.addEventListener("click", loadJSON);
 
       function loadJSON() {
-        alert("Loaded");
+        fetch("users.json")
+          .then((res) => res.json())
+          .then((data) => {
+            let output = `
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Profession</th>
+                <th scope="col">Email</th>
+                </tr>
+            </thead>
+            `;
+            data.forEach((user) => {
+              output += `
+            <tbody>
+                <tr>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.job}</td>
+                <td>${user.email}</td>
+                </tr>
+            </tbody>
+              `;
+            });
+            document.getElementById("jsonResult").innerHTML = output;
+          })
+          .catch((error) => {
+            console.log(error);
+            document.getElementById("jsonResult").innerHTML =
+              "❌ Sorry, Couldn't Load Data!";
+          });
       }
 
       /* Load Data on {Get From API} button Click */
