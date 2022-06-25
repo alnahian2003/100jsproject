@@ -70,32 +70,47 @@
           Get From Text
         </button>
 
-        <button id="getJson" data-tooltip="Get Data From a Local JSON File">
+        <button
+          id="getJson"
+          class="secondary"
+          data-tooltip="Get Data From a Local JSON File"
+        >
           Get JSON
         </button>
         <button id="getApi" data-tooltip="Get Data From an External API">
           Get From API
         </button>
+
+        <button
+          class="secondary"
+          data-tooltip="Create a New Article"
+          data-target="createNewPost"
+          onClick="toggleModal(event)"
+        >
+          Create New Post
+        </button>
       </div>
 
       <!-- Create Post -->
-      <article>
-        <form id="createPost">
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Enter Your Post Title"
-          />
-          <textarea
-            name="post"
-            id="body"
-            placeholder="Enter Your Post Details"
-          ></textarea>
-          <button type="submit" class="secondary">Create Post</button>
-          <div id="apiResult"></div>
-        </form>
-      </article>
+      <dialog id="createNewPost">
+        <article>
+          <form id="createPost">
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Enter Your Post Title"
+            />
+            <textarea
+              name="post"
+              id="body"
+              placeholder="Enter Your Post Details"
+            ></textarea>
+            <button type="submit" class="secondary">Create Post</button>
+            <div id="apiResult"></div>
+          </form>
+        </article>
+      </dialog>
       <hr />
       <br />
 
@@ -109,6 +124,113 @@
         <div id="apiResult"></div>
       </div>
     </main>
+
+    <!-- Pico CSS JavaScript File for Modal -->
+    <script>
+      /*
+       * Modal
+       *
+       * Pico.css - https://picocss.com
+       * Copyright 2019-2022 - Licensed under MIT
+       */
+
+      // Config
+      const isOpenClass = "modal-is-open";
+      const openingClass = "modal-is-opening";
+      const closingClass = "modal-is-closing";
+      const animationDuration = 400; // ms
+      let visibleModal = null;
+
+      // Toggle modal
+      const toggleModal = (event) => {
+        event.preventDefault();
+        const modal = document.getElementById(
+          event.currentTarget.getAttribute("data-target")
+        );
+        typeof modal != "undefined" && modal != null && isModalOpen(modal)
+          ? closeModal(modal)
+          : openModal(modal);
+      };
+
+      // Is modal open
+      const isModalOpen = (modal) => {
+        return modal.hasAttribute("open") &&
+          modal.getAttribute("open") != "false"
+          ? true
+          : false;
+      };
+
+      // Open modal
+      const openModal = (modal) => {
+        if (isScrollbarVisible()) {
+          document.documentElement.style.setProperty(
+            "--scrollbar-width",
+            `${getScrollbarWidth()}px`
+          );
+        }
+        document.documentElement.classList.add(isOpenClass, openingClass);
+        setTimeout(() => {
+          visibleModal = modal;
+          document.documentElement.classList.remove(openingClass);
+        }, animationDuration);
+        modal.setAttribute("open", true);
+      };
+
+      // Close modal
+      const closeModal = (modal) => {
+        visibleModal = null;
+        document.documentElement.classList.add(closingClass);
+        setTimeout(() => {
+          document.documentElement.classList.remove(closingClass, isOpenClass);
+          document.documentElement.style.removeProperty("--scrollbar-width");
+          modal.removeAttribute("open");
+        }, animationDuration);
+      };
+
+      // Close with a click outside
+      document.addEventListener("click", (event) => {
+        if (visibleModal != null) {
+          const modalContent = visibleModal.querySelector("article");
+          const isClickInside = modalContent.contains(event.target);
+          !isClickInside && closeModal(visibleModal);
+        }
+      });
+
+      // Close with Esc key
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && visibleModal != null) {
+          closeModal(visibleModal);
+        }
+      });
+
+      // Get scrollbar width
+      const getScrollbarWidth = () => {
+        // Creating invisible container
+        const outer = document.createElement("div");
+        outer.style.visibility = "hidden";
+        outer.style.overflow = "scroll"; // forcing scrollbar to appear
+        outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+        document.body.appendChild(outer);
+
+        // Creating inner element and placing it in the container
+        const inner = document.createElement("div");
+        outer.appendChild(inner);
+
+        // Calculating difference between container's full width and the child width
+        const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+        // Removing temporary elements from the DOM
+        outer.parentNode.removeChild(outer);
+
+        return scrollbarWidth;
+      };
+
+      // Is scrollbar visible
+      const isScrollbarVisible = () => {
+        return document.body.scrollHeight > screen.height;
+      };
+    </script>
+
     <script>
       const getTextBtn = document.getElementById("getText");
       const getJsonBtn = document.getElementById("getJson");
@@ -175,7 +297,7 @@
             let output = "<h2>Read Articles</h2>";
             data.forEach((post) => {
               output += `<article>
-                <h3>${post.title}</h3>
+                <header><h3>${post.title}</h3></header>
                 <p>${post.body}</p>
                 <footer>Article By User ${post.userId}</footer>
                 </article>
@@ -218,7 +340,11 @@
 
               document.getElementById("apiResult").innerHTML = output;
             })
-            .catch((err) => console.log(err));
+            .catch(
+              (err) =>
+                (document.getElementById("apiResult").innerHTML =
+                  "<h3>❌ Sorry, There was some error!</h3>")
+            );
         }
       });
     </script>
