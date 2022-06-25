@@ -23,16 +23,6 @@
         gap: 1rem;
       }
 
-      #github .user h4 {
-        margin: 0;
-        padding: 10px;
-        font-size: 1rem;
-        /* Truncate */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
       @media (max-width: 576px) {
         .avatar {
           max-width: 46px !important;
@@ -71,7 +61,11 @@
 
         background: #fff;
         cursor: pointer;
+
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
       }
+
       #github .user:hover {
         background: rgb(239, 239, 239);
       }
@@ -81,6 +75,16 @@
         max-height: 80px;
         object-fit: cover;
         background: rgb(119, 119, 119);
+      }
+
+      #github .user h4 {
+        margin: 0;
+        padding: 10px;
+        font-size: 1rem;
+        /* Truncate */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       /* Search User Card */
