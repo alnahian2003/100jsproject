@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playing With AJAX</title>
+
+    <style>
+      body nav {
+        height: 100vh;
+
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 1.2rem;
+
+        font-size: 1.2rem;
+        font-weight: bolder;
+      }
+      @media (min-width: 600px) {
+        body nav {
+          font-size: 2.5rem;
+        }
+
+        body nav a {
+          text-decoration: dotted;
+          text-decoration-line: underline;
+          text-decoration-thickness: 0.5rem;
+          text-underline-position: under;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      < < < Navigation > > >
+      <a href="ajaxText/index.html">AJAX From Text File</a>
+      <a href="ajaxLocalJson/index.html">AJAX From Local JSON</a>
+      <a href="ajaxApi/index.html">AJAX From API</a>
+    </nav>
+  </body>
+</html>
