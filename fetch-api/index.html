@@ -107,7 +107,7 @@
               placeholder="Enter Your Post Details"
             ></textarea>
             <button type="submit" class="secondary">Create Post</button>
-            <div id="apiResult"></div>
+            <div id="newPost"></div>
           </form>
         </article>
       </dialog>
@@ -317,7 +317,7 @@
 
         // Form Validaton
         if (title.value == 0 && body.value == 0) {
-          document.getElementById("apiResult").innerHTML =
+          document.getElementById("newPost").innerHTML =
             "<h3>Please write something first!</h3>";
           return;
         } else {
@@ -338,11 +338,11 @@
                 <p>${data.body}</p>
                 </article>`;
 
-              document.getElementById("apiResult").innerHTML = output;
+              document.getElementById("newPost").innerHTML = output;
             })
             .catch(
               (err) =>
-                (document.getElementById("apiResult").innerHTML =
+                (document.getElementById("newPost").innerHTML =
                   "<h3>❌ Sorry, There was some error!</h3>")
             );
         }

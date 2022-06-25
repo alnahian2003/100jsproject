@@ -51,5 +51,5 @@ In this project, I did almost same stuffs as I did before on Project 6. But in t
 
 [Pico CSS](https://picocss.com) is used in this project for base styles. I have plans to use this amazing CSS Framework on my further projects.
 
-![Playing With Fetch API](fetch-api/screenshot.png)
+![Playing With Fetch API](fetch-api/preview.png)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/fetch-api)**
