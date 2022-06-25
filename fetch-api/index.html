@@ -18,6 +18,44 @@
           Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
           sans-serif;
       }
+
+      /* Orange Light scheme (Default) */
+      /* Can be forced with data-theme="light" */
+      [data-theme="light"],
+      :root:not([data-theme="dark"]) {
+        --primary: #fb8c00;
+        --primary-hover: #f57c00;
+        --primary-focus: rgba(251, 140, 0, 0.125);
+        --primary-inverse: #fff;
+      }
+
+      /* Orange Dark scheme (Auto) */
+      /* Automatically enabled if user has Dark mode enabled */
+      @media only screen and (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --primary: #fb8c00;
+          --primary-hover: #ff9800;
+          --primary-focus: rgba(251, 140, 0, 0.25);
+          --primary-inverse: #fff;
+        }
+      }
+
+      /* Orange Dark scheme (Forced) */
+      /* Enabled if forced with data-theme="dark" */
+      [data-theme="dark"] {
+        --primary: #fb8c00;
+        --primary-hover: #ff9800;
+        --primary-focus: rgba(251, 140, 0, 0.25);
+        --primary-inverse: #fff;
+      }
+
+      /* Orange (Common styles) */
+      :root {
+        --form-element-active-border-color: var(--primary);
+        --form-element-focus-color: var(--primary-focus);
+        --switch-color: var(--primary-inverse);
+        --switch-checked-background-color: var(--primary);
+      }
     </style>
   </head>
   <body>
@@ -39,14 +77,17 @@
           Get From API
         </button>
       </div>
-
+      <hr />
       <br />
 
       <div class="results">
         <h3 id="textResult"></h3>
-
         <br />
+
         <table id="jsonResult" role="grid"></table>
+        <br />
+
+        <div id="apiResult"></div>
       </div>
     </main>
     <script>
@@ -108,7 +149,21 @@
       getApiBtn.addEventListener("click", loadApi);
 
       function loadApi() {
-        alert("Loaded");
+        fetch("https://jsonplaceholder.typicode.com/posts")
+          .then((res) => res.json())
+          .then((data) => {
+            let output = "<h2>Read Articles</h2>";
+            data.forEach((post) => {
+              output += `<article>
+                <h3>${post.title}</h3>
+                <p>${post.body}</p>
+                <footer>Article By User ${post.userId}</footer>
+                </article>
+              `;
+            });
+            document.getElementById("jsonResult").innerHTML = output;
+          })
+          .catch((err) => console.log(err));
       }
     </script>
   </body>
