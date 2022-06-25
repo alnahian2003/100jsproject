@@ -38,3 +38,9 @@ In this project, I tried implementing my basic understandings to build a very si
 ![Simple TODO List](https://user-images.githubusercontent.com/61485238/151235449-11ea5168-0532-4b9b-b328-ff52c2c92abd.jpg)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/todo.html)**
 
+## Project 6: Playing With AJAX
+
+I've learned to play with the basics of AJAX request in JavaScript. I will work more on this later.
+
+![Playing With Ajax](ajax/preview.png)
+**[Live Demo](https://alnahian2003.github.io/100jsproject/ajax)**
