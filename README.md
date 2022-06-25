@@ -44,3 +44,12 @@ I've learned to play with the basics of AJAX request in JavaScript. I will work 
 
 ![Playing With Ajax](ajax/preview.png)
 **[Live Demo](https://alnahian2003.github.io/100jsproject/ajax)**
+
+## Project 7: Playing With Fetch API
+
+In this project, I did almost same stuffs as I did before on Project 6. But in this project I tried the Fetch API instead of xmlHttpRequest. I found it really smooth and more convenient!
+
+[Pico CSS](https://picocss.com) is used in this project for base styles. I have plans to use this amazing CSS Framework on my further projects.
+
+![Playing With Fetch API](fetch-api/screenshot.png)
+**[Live Demo](https://alnahian2003.github.io/100jsproject/fetch-api)**
