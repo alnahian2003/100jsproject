@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX From Text File</title>
+  </head>
+  <body>
+    <button id="trigger">Grab Data</button>
+    <br />
+    <strong>Response:</strong>
+    <p id="response"></p>
+    <script>
+      // Create event listener for button
+      let btn = document.getElementById("trigger");
+      let resp = document.getElementById("response");
+
+      btn.addEventListener("click", loadText);
+
+      function loadText() {
+        // Create xhr instance
+        let xhr = new XMLHttpRequest();
+
+        // console.log(xhr);
+
+        // Open the file
+        xhr.open("GET", "data.txt", true);
+
+        // OnReadyStateChange Method
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            resp.innerText = this.responseText;
+          } else if (this.status == 404) {
+            resp.innerHTML = "File not found";
+          }
+        };
+
+        xhr.send();
+      }
+    </script>
+  </body>
+</html>
