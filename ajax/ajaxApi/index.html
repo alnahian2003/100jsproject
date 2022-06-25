@@ -7,24 +7,69 @@
     <title>AJAX From External API</title>
 
     <style>
+      * {
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+      body {
+        padding: 1rem;
+        background-color: #f0f2f5;
+      }
       #github {
         display: grid;
         grid-template-columns: repeat(2, minmax(100px, 1fr));
         gap: 1rem;
       }
 
+      #github .user h4 {
+        margin: 0;
+        padding: 10px;
+        font-size: 1rem;
+        /* Truncate */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      @media (max-width: 576px) {
+        .avatar {
+          max-width: 46px !important;
+          max-height: 46px !important;
+        }
+      }
+
+      @media (min-width: 800px) {
+        #github {
+          grid-template-columns: repeat(3, minmax(100px, 1fr));
+        }
+        .avatar {
+          max-width: 70px !important;
+          max-height: 70px !important;
+        }
+      }
+
       @media (min-width: 1200px) {
         #github {
           grid-template-columns: repeat(5, minmax(100px, 1fr));
+        }
+
+        .avatar {
+          max-width: 70px !important;
+          max-height: 70px !important;
         }
       }
 
       #github .user {
         display: flex;
         flex-flow: row;
-        gap: 1rem;
-        background: rgb(220, 220, 220);
         align-self: start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+
+        background: #fff;
         cursor: pointer;
       }
       #github .user:hover {
@@ -37,18 +82,83 @@
         object-fit: cover;
         background: rgb(119, 119, 119);
       }
+
+      /* Search User Card */
+
+      .card {
+        display: flex;
+        background: #fff;
+        max-width: 700px;
+        margin: 2rem 0;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+      .card-pic-wrap {
+        max-width: 250px;
+        height: auto;
+        object-fit: cover;
+
+        border-radius: 5px 0 0 5px;
+        flex: 1;
+        background: linear-gradient(to bottom, #171515, rgb(63, 60, 60));
+      }
+      .card-content {
+        padding: 3em 2em;
+        flex: 2;
+      }
+
+      .card-content h3 {
+        margin: 0.5rem auto;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          overflow-x: hidden;
+        }
+        .card {
+          flex-direction: column;
+          margin-top: 50px;
+          margin-bottom: 50px;
+        }
+
+        .card-pic-wrap {
+          max-width: 100%;
+        }
+
+        .card-content {
+          padding: 2em 2em 1em;
+        }
+      }
     </style>
   </head>
   <body>
     <h1>GitHub Users</h1>
+
+    <div id="theUser"></div>
+
+    <!-- Get Specific User Data -->
+    <form method="POST">
+      <input type="text" id="username" placeholder="Github Username" />
+
+      <button type="submit" id="load">Search</button>
+    </form>
+
+    <br />
+    <!-- Display Data from AJAX on Page Load -->
     <div id="github"></div>
-    <button id="load">Load Users From GitHub</button>
 
     <script>
+      const userInput = document.getElementById("username");
       const loadBtn = document.getElementById("load");
       const github = document.getElementById("github");
+      const theUser = document.getElementById("theUser");
 
-      loadBtn.addEventListener("click", loadGitHubUsers);
+      loadBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        getSpecificUser();
+      });
+
+      loadGitHubUsers();
 
       function loadGitHubUsers() {
         let xhr = new XMLHttpRequest();
@@ -67,6 +177,48 @@
             github.innerHTML = data;
           } else if (this.status == 404) {
             github.innerHTML = `<h2>Couldn't Fetch Data!<h2>`;
+          }
+        };
+
+        xhr.send();
+      }
+
+      function getSpecificUser() {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(
+          "GET",
+          `https://api.github.com/users/${userInput.value}`,
+          true
+        );
+
+        xhr.onload = function () {
+          if (this.status == 200) {
+            let user = JSON.parse(this.responseText);
+            let data = "";
+            data += `
+              <div class="card">
+                <img class="card-pic-wrap"
+                    src="${user.avatar_url}"
+                    alt="${user.name}"
+                />
+                <div class="card-content">
+                <h3>${user.name}</h3>
+                <small><strong>${user.followers} Followers • ${user.following} Following • ${user.public_repos} Repositories</strong></small>
+                <p>
+                    <ul>
+                        <li>Username: ${user.login}</li>
+                        <li>Bio: ${user.bio}</li>
+                        <li>Location: ${user.location}</li>
+                        <li><a href="${user.blog}">Website</a></li>
+                    </ul>
+                </p>
+                </div>
+            </div>
+                `;
+            theUser.innerHTML = data;
+          } else {
+            theUser.innerText = "Sorry, No User Found";
           }
         };
 
