@@ -77,6 +77,25 @@
           Get From API
         </button>
       </div>
+
+      <!-- Create Post -->
+      <article>
+        <form id="createPost">
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter Your Post Title"
+          />
+          <textarea
+            name="post"
+            id="body"
+            placeholder="Enter Your Post Details"
+          ></textarea>
+          <button type="submit" class="secondary">Create Post</button>
+          <div id="apiResult"></div>
+        </form>
+      </article>
       <hr />
       <br />
 
@@ -94,6 +113,7 @@
       const getTextBtn = document.getElementById("getText");
       const getJsonBtn = document.getElementById("getJson");
       const getApiBtn = document.getElementById("getApi");
+      const postForm = document.getElementById("createPost");
 
       /* Load Data on {Get From Text} button Click */
       getTextBtn.addEventListener("click", loadText);
@@ -165,6 +185,42 @@
           })
           .catch((err) => console.log(err));
       }
+
+      /* Create New Post */
+      createPost.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let title = document.getElementById("title");
+        let body = document.getElementById("body");
+
+        // Form Validaton
+        if (title.value == 0 && body.value == 0) {
+          document.getElementById("apiResult").innerHTML =
+            "<h3>Please write something first!</h3>";
+          return;
+        } else {
+          // Make the request to API
+          fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({ title: title.value, body: body.value }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              let output = "<h2>New Article Created ✔</h2>";
+              // Display the submitted post
+              output += `<article>
+                <h3>${data.title}</h3>
+                <p>${data.body}</p>
+                </article>`;
+
+              document.getElementById("apiResult").innerHTML = output;
+            })
+            .catch((err) => console.log(err));
+        }
+      });
     </script>
   </body>
 </html>
