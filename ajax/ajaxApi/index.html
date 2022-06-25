@@ -202,9 +202,11 @@
               data += `<a class="user" href="${users[i].html_url}" target="_blank"><img src="${users[i].avatar_url}" class="avatar" alt="${users[i].login}" /><h4>${users[i].login}</h4></a>`;
             }
             github.innerHTML = data;
-          } else if (this.status == 404) {
-            github.innerHTML = `<h2>Couldn't Fetch Data!<h2>`;
           }
+        };
+
+        xhr.onerror = function () {
+          github.innerHTML = `<h2>Couldn't Fetch Data!<h2>`;
         };
 
         xhr.send();
