@@ -5,8 +5,73 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AJAX From External API</title>
+
+    <style>
+      #github {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+        gap: 1rem;
+      }
+
+      @media (min-width: 1200px) {
+        #github {
+          grid-template-columns: repeat(5, minmax(100px, 1fr));
+        }
+      }
+
+      #github .user {
+        display: flex;
+        flex-flow: row;
+        gap: 1rem;
+        background: rgb(220, 220, 220);
+        align-self: start;
+        cursor: pointer;
+      }
+      #github .user:hover {
+        background: rgb(239, 239, 239);
+      }
+
+      .avatar {
+        max-width: 80px;
+        max-height: 80px;
+        object-fit: cover;
+        background: rgb(119, 119, 119);
+      }
+    </style>
   </head>
   <body>
-    
+    <h1>GitHub Users</h1>
+    <div id="github"></div>
+    <button id="load">Load Users From GitHub</button>
+
+    <script>
+      const loadBtn = document.getElementById("load");
+      const github = document.getElementById("github");
+
+      loadBtn.addEventListener("click", loadGitHubUsers);
+
+      function loadGitHubUsers() {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://api.github.com/users", true);
+
+        xhr.onload = function () {
+          if (this.status == 200) {
+            // OK
+            let users = JSON.parse(this.response);
+
+            let data = "";
+            for (const i in users) {
+              data += `<a class="user" href="${users[i].html_url}" target="_blank"><img src="${users[i].avatar_url}" class="avatar" alt="${users[i].login}" /><h4>${users[i].login}</h4></a>`;
+            }
+            github.innerHTML = data;
+          } else if (this.status == 404) {
+            github.innerHTML = `<h2>Couldn't Fetch Data!<h2>`;
+          }
+        };
+
+        xhr.send();
+      }
+    </script>
   </body>
 </html>
