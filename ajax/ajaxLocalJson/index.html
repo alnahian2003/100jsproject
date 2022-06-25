@@ -7,32 +7,88 @@
     <title>AJAX From Text File</title>
   </head>
   <body>
-    <button id="trigger">Grab Data</button>
+    <button id="getUser">Get User Data</button>
     <br />
     <strong>Response:</strong>
-    <p id="response"></p>
+    <div id="user"></div>
+
+    <br />
+
+    <button id="getUsers">Get All Users Data</button>
+    <br />
+    <strong>Response:</strong>
+    <div id="users"></div>
+
     <script>
       // Create event listener for button
-      let btn = document.getElementById("trigger");
-      let resp = document.getElementById("response");
+      let getUser = document.getElementById("getUser");
+      let getUsers = document.getElementById("getUsers");
 
-      btn.addEventListener("click", loadText);
+      let user = document.getElementById("user");
 
-      function loadText() {
+      let users = document.getElementById("users");
+
+      // Trigger the loadText() function on Get User Data button click
+      getUser.addEventListener("click", loadUser);
+      getUsers.addEventListener("click", loadUsers);
+
+      // Loads a single user data using AJAX request
+      function loadUser() {
         // Create xhr instance
         let xhr = new XMLHttpRequest();
 
-        // console.log(xhr);
-
         // Open the file
-        xhr.open("GET", "data.txt", true);
+        xhr.open("GET", "user.json", true);
 
         // OnReadyStateChange Method
         xhr.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
-            resp.innerText = this.responseText;
+            let userData = JSON.parse(this.responseText);
+
+            data = "";
+            data += `<ul>
+              <li>User ID: ${userData.id}</li>
+              <li>Name: ${userData.name}</li>
+              <li><strong>Job:</strong> ${userData.job}</li>
+              <li><strong>Email:</strong> ${userData.email}</li>
+              </ul>`;
+            user.innerHTML = data;
           } else if (this.status == 404) {
-            resp.innerHTML = "File not found";
+            user.innerText = "File not found";
+          }
+        };
+
+        xhr.send();
+      }
+
+      // Loads ALL USER DATA using AJAX request
+      function loadUsers() {
+        // Create xhr instance
+        let xhr = new XMLHttpRequest();
+
+        // Open the file
+        xhr.open("GET", "users.json", true);
+
+        // OnReadyStateChange Method
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            let usersData = JSON.parse(this.responseText);
+
+            data = "";
+
+            for (const i in usersData) {
+              data += `
+              <ul>
+              <li><strong>User ID:</strong> ${usersData[i].id}</li>
+              <li><strong>Name:</strong> ${usersData[i].name}</li>
+              <li><strong>Job:</strong> ${usersData[i].job}</li>
+              <li><strong>Email:</strong> ${usersData[i].email}</li>
+              </ul>
+              <hr/>`;
+            }
+            users.innerHTML = data;
+          } else if (this.status == 404) {
+            user.innerText = "File not found";
           }
         };
 
