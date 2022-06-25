@@ -51,6 +51,7 @@
         }
       }
 
+      /* User Cards */
       #github .user {
         display: flex;
         flex-flow: row;
@@ -64,10 +65,20 @@
 
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
           0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+        border-radius: 3px;
+
+        text-decoration: none;
+        color: #6a6a6a;
       }
 
       #github .user:hover {
         background: rgb(239, 239, 239);
+        text-decoration-color: red;
+        text-decoration: dotted;
+        text-decoration-line: underline;
+        text-underline-position: under;
+        text-decoration-color: #6a6a6a;
       }
 
       .avatar {
@@ -75,6 +86,7 @@
         max-height: 80px;
         object-fit: cover;
         background: rgb(119, 119, 119);
+        border-radius: 3px;
       }
 
       #github .user h4 {
@@ -89,6 +101,13 @@
 
       /* Search User Card */
 
+      #theUser {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+      }
+
       .card {
         display: flex;
         background: #fff;
@@ -101,8 +120,7 @@
         max-width: 250px;
         height: auto;
         object-fit: cover;
-
-        border-radius: 5px 0 0 5px;
+        border-radius: 3px;
         flex: 1;
         background: linear-gradient(to bottom, #171515, rgb(63, 60, 60));
       }
